@@ -107,3 +107,5 @@ async def get_product(product_id: int, db: Session = Depends(get_db)):
             detail="Product not found"
         )
     return {"id": product.id, "name": product.name, "description": product.description, "price": product.price, "stock": product.stock}
+
+## test
