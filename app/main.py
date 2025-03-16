@@ -182,5 +182,3 @@ async def delete_order(order_id: int, db: Session = Depends(get_db)):
     db.delete(order)
     db.commit
     return {"message": "Order deleted"}
-
-# test test
