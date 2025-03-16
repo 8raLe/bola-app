@@ -69,6 +69,34 @@ async def list_products(db: Session = Depends(get_db)):
     products = db.query(Product).all() 
     return [{"id": p.id, "name": p.name, "price": p.price, "stock": p.stock} for p in products]
 
+@app.put("/product/{product_id}")
+async def update_product(
+    product_id: int,
+    name: str = None,
+    description: str = None,
+    price: float = None,
+    stock: int = None,
+    db: Session = Depends(get_db)
+):
+    product = db.query(Product).filter(Product.id == product_id).first()
+    if not product:
+        raise HTTPException(
+            status_code=404,
+            detail="Product not found"
+        )
+    if name:
+        product.name = name
+    if description:
+        product.description = description
+    if price:
+        product.price = price
+    if stock:
+        product.stock = stock
+
+    db.commit()
+    return{"message": "Product updated"}
+
+
 @app.post("/orders")
 async def create_order(user_id: int, product_id: int, order_amount: int, db: Session = Depends(get_db)):
     user = db.query(User).filter(User.id == user_id).first()
@@ -153,4 +181,4 @@ async def delete_order(order_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Order not found")
     db.delete(order)
     db.commit
-    return ("message": "Order deleted")
+    return {"message": "Order deleted"}
