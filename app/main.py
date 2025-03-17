@@ -1,13 +1,14 @@
 ## uvicorn app.main:app --reload
 
 from fastapi import FastAPI, Depends, HTTPException
+from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 from app.db import get_db, engine
 from app.models.base import Base
 from app.models.user import User
 from app.models.product import Product
 from app.models.order import Order
-from app.security import get_password_hash, verify_password
+from app.security import get_password_hash, verify_password, get_current_user, create_access_token
 
 app = FastAPI()
 
@@ -16,6 +17,20 @@ Base.metadata.create_all(bind=engine)
 @app.get("/")
 async def root():
     return {"message": "Hello, World!"}
+
+# Login
+@app.post("/token")
+async def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
+    user = db.query(User).filter(User.username == form_data.username).first()
+    if not user or not verify_password(form_data.password, user.hashed_password):
+        raise HTTPException(
+            status_code=401,
+            detail= "Incorrect username or password",
+            headers={"WWW-Authenticate": "Bearer"}
+        )
+    access_token = create_access_token(data={"sub": user.username})
+    return {"access_token": access_token, "token_type": "bearer"}
+
 
 @app.post("/register")
 async def register_user(username: str, email: str, password: str, db: Session = Depends(get_db)):
@@ -29,15 +44,15 @@ async def register_user(username: str, email: str, password: str, db: Session = 
     db.refresh(new_user)
     return {"message": "User created", "user_id": new_user.id}
 
-@app.post("/login")
-async def login(username: str, password: str, db: Session = Depends(get_db)):
-    user = db.query(User).filter(User.username == username).first()
-    if user and verify_password(password, user.hashed_password):
-        return {"message": "User Login", "user_id": user.id}
-    raise HTTPException(
-        status_code=401, # Unauthorised
-        detail= "Incorrect username or password"
-    )
+# @app.post("/login")
+# async def login(username: str, password: str, db: Session = Depends(get_db)):
+#     user = db.query(User).filter(User.username == username).first()
+#     if user and verify_password(password, user.hashed_password):
+#         return {"message": "User Login", "user_id": user.id}
+#     raise HTTPException(
+#         status_code=401, # Unauthorised
+#         detail= "Incorrect username or password"
+#     )
 
 # BOLA Issue: Anyone can view any user's details by changing the ID
 @app.get("/users/{user_id}")
