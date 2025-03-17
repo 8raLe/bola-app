@@ -54,12 +54,30 @@ async def register_user(username: str, email: str, password: str, db: Session = 
 #         detail= "Incorrect username or password"
 #     )
 
+
 # BOLA Issue: Anyone can view any user's details by changing the ID
+# Fixed
+
 @app.get("/users/{user_id}")
-async def get_user(user_id: int, db: Session = Depends(get_db)):
+async def get_user(
+        user_id: int, 
+        current_user: User = Depends(get_current_user),
+        db: Session = Depends(get_db)
+    ):
+
+    if user_id != current_user.id and not current_user.is_admin:
+        raise HTTPException(
+            status_code=403, 
+            detail="Unauthorised"
+        )
+
     user = db.query(User).filter(User.id == user_id).first()
     if not user:
-        raise HTTPException(status_code=404, detail="User not found")
+        raise HTTPException(
+            status_code=404, 
+            detail="User not found"
+        )
+
     return {
         "id": user.id,
         "username": user.username,
@@ -149,29 +167,86 @@ async def create_order(user_id: int, product_id: int, order_amount: int, db: Ses
     return {"message": "Order created", "order_id": new_order.id}
 
 @app.get("/orders")
-async def get_orders(db: Session = Depends(get_db)):
-    orders = db.query(Order).all() # BOLA Vulnerability, as any user can see ALL
+async def get_orders(
+        current_user: User = Depends(get_current_user),
+        db: Session = Depends(get_db)
+    ):
+
+    # if not current_user:
+    #     raise HTTPException(
+    #         status_code=401,
+    #         detail=
+    #     )
+
+    if current_user.is_admin:
+        orders = db.query(Order).all()
+    else:
+        orders = db.query(Order).filter(Order.user_id == current_user.id).all()
+    
     return [{"user id": o.user_id, "product id": o.product_id, "amount": o.amount, "status": o.status} for o in orders]
 
 # BOLA Issue: Anyone can view any order's details just by knowing its ID
-@app.get("/orders/{orders_id}")
-async def get_order(order_id: int, db: Session = Depends(get_db)):
-    order = db.query(Order).filter(Order.id == order_id).first()
+# Fixed
+
+@app.get("/orders/{order_id}")
+async def get_order(
+        order_id: int, 
+        current_user: User = Depends(get_current_user),
+        db: Session = Depends(get_db)
+    ):
+
+    if current_user.is_admin:
+        order = db.query(Order).filter(Order.id == order_id).first()
+
+    else:
+        order = db.query(Order).filter(
+            Order.id == order_id,
+            Order.user_id == current_user.id
+        ).first()
+
     if not order:
-        raise HTTPException(status_code=404, detail="Order not found")
+        raise HTTPException(
+            status_code=404, 
+            detail="Order not found"
+        )
+    
     return {
-        "user id": order.user_id,
+        "user_id": order.user_id,
         "product_id": order.product_id,
         "amount": order.amount,
         "status": order.status
     }
 
 # Anyone can modify any order status
-@app.put("orders/{order_id}")
-async def update_order(order_id: int, status: str, db: Session = Depends(get_db)):
-    order = db.query(Order).filter(Order.id == order_id).first()
+# Fixed
+@app.put("/orders/{order_id}")
+async def update_order(
+        order_id: int, 
+        status: str,
+        current_user: User = Depends(get_current_user), 
+        db: Session = Depends(get_db)
+    ):
+
+    if not current_user.is_admin and current_user.id != order.user_id:
+        raise HTTPException(
+            status_code=403,
+            detail="Unauthorized access"
+        )
+
+    if current_user.is_admin:
+        order = db.query(Order).filter(Order.id == order_id).first()
+    else:
+        order = db.query(Order).filter(
+            Order.id == order_id,
+            Order.user_id == current_user.id
+        ).first()
+
     if not order:
-        raise HTTPException(status_code=404, detail="Order not found")
+        raise HTTPException(
+            status_code=404, 
+            detail="Order not found"
+        )
+    
     order.status = status
     db.commit()
     return {"message": "Order updated"}
@@ -179,9 +254,33 @@ async def update_order(order_id: int, status: str, db: Session = Depends(get_db)
 # Anyone can access any user's orders just by changing the user_id in the URL
 # No authentication check to verify if the requester is logged in
 # No authorization check to verify if the requester is allowed to see these orders    
-@app.get("users/{user_id}/orders")
-async def get_user_orders(user_id: int, db: Session = Depends(get_db)):
-    orders = db.query(Order).filter(Order.user_id == user_id).all()
+
+# Fixed
+
+@app.get("/users/{user_id}/orders")
+async def get_user_orders(
+        user_id: int,
+        current_user: User = Depends(get_current_user), 
+        db: Session = Depends(get_db)
+    ):
+
+    if not current_user.is_admin and current_user.id != user_id:
+        raise HTTPException(
+            status_code=403,
+            detail="Unauthorised access"
+        )
+    
+    if current_user.is_admin:
+        orders = db.query(Order).filter(Order.user_id == user_id).all()
+    else:
+        orders = db.query(Order).filter(Order.user_id == current_user.id).all()
+
+    if not orders:
+        raise HTTPException(
+            status_code=404,
+            detail="User orders not found"
+        )
+
     return [{
         "id": order.id, 
         "product_id": order.product_id, 
@@ -189,8 +288,18 @@ async def get_user_orders(user_id: int, db: Session = Depends(get_db)):
         "status": order.status
         } for order in orders]
 
+
+# Anyone can delete any order
+
 @app.delete("/orders/{order_id}")
-async def delete_order(order_id: int, db: Session = Depends(get_db)):
+async def delete_order(
+        order_id: int, 
+        current_user = Depends(get_current_user),
+        db: Session = Depends(get_db)
+    ):
+
+    # if 
+
     order = db.query(Order).filter(Order.id == order_id).first()
     if not order:
         raise HTTPException(status_code=404, detail="Order not found")
