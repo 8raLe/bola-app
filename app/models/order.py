@@ -13,6 +13,4 @@ class Order(BaseModel):
 
     status = Column(String) # pending / completed
     
-
-    # BOLA Vulnerability?
     user = relationship("User")
