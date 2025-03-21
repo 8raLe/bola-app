@@ -1,20 +1,19 @@
 from passlib.context import CryptContext
 from jose import JWTError, jwt
-from fastapi import Depends, HTTPException, status
+from fastapi import Depends, HTTPException
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import Session
 
 from datetime import datetime, timedelta, UTC
-from typing import Annotated
 
 from app.db import get_db
 from app.models.user import User
 
-SECRET_KEY = ""
+SECRET_KEY = "e659bd4abaf5a068c94d8fb2ba718b3a6515cbd82ccb5b291b0209494b7f76e8" # openssl rand -hex 32 in Git Bash
 ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 30
+ACCESS_TOKEN_EXPIRE_MINUTES = 60
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 

@@ -1,7 +1,7 @@
 ## uvicorn app.main:app --reload
 
 from fastapi import FastAPI, Depends, HTTPException
-from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 from app.db import get_db, engine
 from app.models.base import Base
@@ -19,7 +19,7 @@ async def root():
     return {"message": "Hello, World!"}
 
 # Login
-@app.post("/token")
+@app.post("/login")
 async def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
     user = db.query(User).filter(User.username == form_data.username).first()
     if not user or not verify_password(form_data.password, user.hashed_password):
@@ -33,11 +33,19 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = 
 
 
 @app.post("/register")
-async def register_user(username: str, email: str, password: str, db: Session = Depends(get_db)):
+async def register_user(
+        username: str, 
+        email: str, 
+        password: str, 
+        is_admin: bool = False, # For Testing - Ordinarily this should probably be it's endpoint, as it's insecure
+        db: Session = Depends(get_db)
+    ):
+
     new_user = User(
         username=username,
         email=email,
-        hashed_password=get_password_hash(password)
+        hashed_password=get_password_hash(password),
+        is_admin=is_admin
     )
     db.add(new_user)
     db.commit()
@@ -148,7 +156,8 @@ async def get_user3(
     }
 
 
-
+# In a real system, this would require checks to create products.
+# Let's have none for the sake of testing.
 @app.post("/products")
 async def create_product(name: str, description: str, price: float, stock: int, db: Session = Depends(get_db)):
     new_product = Product(
@@ -171,6 +180,7 @@ async def list_products(db: Session = Depends(get_db)):
 
 # BOLA VULNERABILITY 5
 # Update Product only if Admin
+# Fixed by allowing update only is Admin.
 
 @app.put("/product/{product_id}")
 async def update_product(
@@ -284,7 +294,7 @@ async def get_orders(
 
 # BOLA VULNERABILITY 3
 # BOLA Issue: Anyone can view any order's details just by knowing its ID
-# Fixed, 404 then 404.
+# Fixed, 404 then 403.
 
 @app.get("/orders/{order_id}")
 async def get_order(
@@ -316,7 +326,7 @@ async def get_order(
 
 # BOLA VULNERABILITY 4
 # Anyone can modify any order status
-# Fixed, 403 then 404
+# Fixed, 404 then 403.
 
 @app.put("/orders/{order_id}")
 async def update_order(
