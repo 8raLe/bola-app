@@ -125,7 +125,7 @@ async def get_user2(
     }
 
 # BOLA VULNERABILITY 1 - Alternative Implementation 2
-# Fixed, Security focused:
+# Fixed, Query focused:
 # Hides resource existence, querying only resources user is authorised to access, preventing enumeration attacks. Less helpful with error handling.
 
 @app.get("/users/{user_id}/alt-path2")
@@ -294,10 +294,43 @@ async def get_orders(
 
 # BOLA VULNERABILITY 3
 # BOLA Issue: Anyone can view any order's details just by knowing its ID
-# Fixed, 404 then 403.
+# Fixed, 403 then 404. 
+# 404 First would be more practical in this circumstance, as if order doesn't exist can provide an error. However, this is implemented first for testing file.
 
 @app.get("/orders/{order_id}")
 async def get_order(
+        order_id: int, 
+        current_user: User = Depends(get_current_user),
+        db: Session = Depends(get_db)
+    ):
+        
+    order = db.query(Order).filter(Order.id == order_id).first()
+    
+    if not current_user.is_admin and current_user.id != order.user_id:
+        raise HTTPException(
+            status_code=403,
+            detail="Unauthorised access"
+        )
+    
+    if not order:
+        raise HTTPException(
+            status_code=404, 
+            detail="Order not found"
+       )
+    
+    return {
+        "user_id": order.user_id,
+        "product_id": order.product_id,
+        "amount": order.amount,
+        "status": order.status
+    }
+
+
+# BOLA VULNERABILITY 3 - Alternative Fix 1
+# Fixed with 404 First.
+
+@app.get("/orders/{order_id}/alt-path")
+async def get_order2(
         order_id: int, 
         current_user: User = Depends(get_current_user),
         db: Session = Depends(get_db)
@@ -323,6 +356,38 @@ async def get_order(
         "amount": order.amount,
         "status": order.status
     }
+    
+# BOLA VULNERABILITY 3 - Alternative Fix 2
+# Fixed with Query-Focused Implementation
+
+@app.get("/orders/{order_id}/alt-path2")
+async def get_order3(
+        order_id: int, 
+        current_user: User = Depends(get_current_user),
+        db: Session = Depends(get_db)
+    ):
+
+    if current_user.is_admin:
+        order = db.query(Order).filter(Order.id == order_id).first()
+    else:
+        order = db.query(Order).filter(
+            Order.id == order_id,
+            Order.user_id == current_user.id
+        ).first()
+
+    if not order:
+        raise HTTPException(
+            status_code=404, 
+            detail="Order not found"
+       )
+    
+    return {
+        "user_id": order.user_id,
+        "product_id": order.product_id,
+        "amount": order.amount,
+        "status": order.status
+    }
+
 
 # BOLA VULNERABILITY 4
 # Anyone can modify any order status
