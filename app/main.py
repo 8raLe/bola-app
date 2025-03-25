@@ -145,7 +145,7 @@ async def get_orders(db: Session = Depends(get_db)):
 
 # BOLA VULNERABILITY 3
 # BOLA Issue: Anyone can view any order's details just by knowing its ID
-@app.get("/orders/{orders_id}")
+@app.get("/orders/{order_id}")
 async def get_order(order_id: int, db: Session = Depends(get_db)):
     order = db.query(Order).filter(Order.id == order_id).first()
     if not order:
@@ -159,7 +159,7 @@ async def get_order(order_id: int, db: Session = Depends(get_db)):
 
 # BOLA VULNERABILITY 4
 # Anyone can modify any order status
-@app.put("orders/{order_id}")
+@app.put("/orders/{order_id}")
 async def update_order(order_id: int, status: str, db: Session = Depends(get_db)):
     order = db.query(Order).filter(Order.id == order_id).first()
     if not order:
@@ -172,7 +172,7 @@ async def update_order(order_id: int, status: str, db: Session = Depends(get_db)
 # Anyone can access any user's orders just by changing the user_id in the URL
 # No authentication check to verify if the requester is logged in
 # No authorization check to verify if the requester is allowed to see these orders    
-@app.get("users/{user_id}/orders")
+@app.get("/users/{user_id}/orders")
 async def get_user_orders(user_id: int, db: Session = Depends(get_db)):
     orders = db.query(Order).filter(Order.user_id == user_id).all()
     return [{

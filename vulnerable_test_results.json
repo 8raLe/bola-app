@@ -1,0 +1,121 @@
+//BOLA VULNERABILITY PRE-PATCH TESTS
+
++-----------------+----------+----------------+--------------------------------------+------------+---------------+-----------------+-------------------+----------+------------------------------------------+
+| vulnerability   | method   | endpoint       | url                                  | username   |   status_code |   response_time |   expected_status | passed   | description                              |
++=================+==========+================+======================================+============+===============+=================+===================+==========+==========================================+
+| BOLA 1          | GET      | users/2        | http://localhost:8000/users/2        | john       |           200 |         1030.22 |               200 | True     | user2 accessing their own data           |
++-----------------+----------+----------------+--------------------------------------+------------+---------------+-----------------+-------------------+----------+------------------------------------------+
+| BOLA 1          | GET      | users/3        | http://localhost:8000/users/3        | john       |           200 |         1018.83 |               200 | True     | user2 accessing user3's data             |
++-----------------+----------+----------------+--------------------------------------+------------+---------------+-----------------+-------------------+----------+------------------------------------------+
+| BOLA 2          | GET      | orders         | http://localhost:8000/orders         | john       |           200 |         1024.75 |               200 | True     | user2 accessing all orders               |
++-----------------+----------+----------------+--------------------------------------+------------+---------------+-----------------+-------------------+----------+------------------------------------------+
+| BOLA 3          | GET      | orders/1       | http://localhost:8000/orders/1       | john       |           200 |         1022.92 |               200 | True     | user2 accessing details of his own order |
++-----------------+----------+----------------+--------------------------------------+------------+---------------+-----------------+-------------------+----------+------------------------------------------+
+| BOLA 6          | GET      | users/3/orders | http://localhost:8000/users/3/orders | john       |           200 |         1024.01 |               200 | True     | user2 accessing the orders of user3      |
++-----------------+----------+----------------+--------------------------------------+------------+---------------+-----------------+-------------------+----------+------------------------------------------+
+| BOLA 4          | PUT      | orders/3       | http://localhost:8000/orders/3       | john       |           404 |         2047.32 |               200 | False    | user2 modify user3's order               |
++-----------------+----------+----------------+--------------------------------------+------------+---------------+-----------------+-------------------+----------+------------------------------------------+
+| BOLA 5          | PUT      | product/1      | http://localhost:8000/product/1      | john       |           200 |         1025.17 |               200 | True     | user2 changing details of a product      |
++-----------------+----------+----------------+--------------------------------------+------------+---------------+-----------------+-------------------+----------+------------------------------------------+
+| BOLA 7          | DELETE   | orders/3       | http://localhost:8000/orders/3       | john       |           404 |         1022.82 |               200 | False    | user2 delete user3 order                 |
++-----------------+----------+----------------+--------------------------------------+------------+---------------+-----------------+-------------------+----------+------------------------------------------+
+
+//Raw Results
+[
+  {
+    "vulnerability": "BOLA 1",
+    "method": "GET",
+    "endpoint": "users/2",
+    "url": "http://localhost:8000/users/2",
+    "username": "john",
+    "status_code": 200,
+    "response_time": 1030.22,
+    "expected_status": 200,
+    "passed": true,
+    "description": "user2 accessing their own data"
+  },
+  {
+    "vulnerability": "BOLA 1",
+    "method": "GET",
+    "endpoint": "users/3",
+    "url": "http://localhost:8000/users/3",
+    "username": "john",
+    "status_code": 200,
+    "response_time": 1018.83,
+    "expected_status": 200,
+    "passed": true,
+    "description": "user2 accessing user3's data"
+  },
+  {
+    "vulnerability": "BOLA 2",
+    "method": "GET",
+    "endpoint": "orders",
+    "url": "http://localhost:8000/orders",
+    "username": "john",
+    "status_code": 200,
+    "response_time": 1024.75,
+    "expected_status": 200,
+    "passed": true,
+    "description": "user2 accessing all orders"
+  },
+  {
+    "vulnerability": "BOLA 3",
+    "method": "GET",
+    "endpoint": "orders/1",
+    "url": "http://localhost:8000/orders/1",
+    "username": "john",
+    "status_code": 200,
+    "response_time": 1022.92,
+    "expected_status": 200,
+    "passed": true,
+    "description": "user2 accessing details of his own order"
+  },
+  {
+    "vulnerability": "BOLA 6",
+    "method": "GET",
+    "endpoint": "users/3/orders",
+    "url": "http://localhost:8000/users/3/orders",
+    "username": "john",
+    "status_code": 200,
+    "response_time": 1024.01,
+    "expected_status": 200,
+    "passed": true,
+    "description": "user2 accessing the orders of user3"
+  },
+  {
+    "vulnerability": "BOLA 4",
+    "method": "PUT",
+    "endpoint": "orders/3",
+    "url": "http://localhost:8000/orders/3",
+    "username": "john",
+    "status_code": 404,
+    "response_time": 2047.32,
+    "expected_status": 200,
+    "passed": false,
+    "description": "user2 modify user3's order"
+  },
+  {
+    "vulnerability": "BOLA 5",
+    "method": "PUT",
+    "endpoint": "product/1",
+    "url": "http://localhost:8000/product/1",
+    "username": "john",
+    "status_code": 200,
+    "response_time": 1025.17,
+    "expected_status": 200,
+    "passed": true,
+    "description": "user2 changing details of a product"
+  },
+  {
+    "vulnerability": "BOLA 7",
+    "method": "DELETE",
+    "endpoint": "orders/3",
+    "url": "http://localhost:8000/orders/3",
+    "username": "john",
+    "status_code": 404,
+    "response_time": 1022.82,
+    "expected_status": 200,
+    "passed": false,
+    "description": "user2 delete user3 order"
+  }
+]

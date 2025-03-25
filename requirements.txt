@@ -6,3 +6,5 @@ python-jose
 passlib 
 python-multipart
 bcrypt
+tabulate
+requests
