@@ -39,6 +39,7 @@ async def login(username: str, password: str, db: Session = Depends(get_db)):
         detail= "Incorrect username or password"
     )
 
+# BOLA VULNERABILITY 1
 # BOLA Issue: Anyone can view any user's details by changing the ID
 @app.get("/users/{user_id}")
 async def get_user(user_id: int, db: Session = Depends(get_db)):
@@ -69,6 +70,8 @@ async def list_products(db: Session = Depends(get_db)):
     products = db.query(Product).all() 
     return [{"id": p.id, "name": p.name, "price": p.price, "stock": p.stock} for p in products]
 
+# BOLA VULNERABILITY 5
+# Update Product only if Admin
 @app.put("/product/{product_id}")
 async def update_product(
     product_id: int,
@@ -133,11 +136,14 @@ async def create_order(user_id: int, product_id: int, order_amount: int, db: Ses
 
     return {"message": "Order created", "order_id": new_order.id}
 
+# BOLA VULNERABILITY 2
+# All orders could be viewed regardless of ownership.
 @app.get("/orders")
 async def get_orders(db: Session = Depends(get_db)):
     orders = db.query(Order).all() # BOLA Vulnerability, as any user can see ALL
     return [{"user id": o.user_id, "product id": o.product_id, "amount": o.amount, "status": o.status} for o in orders]
 
+# BOLA VULNERABILITY 3
 # BOLA Issue: Anyone can view any order's details just by knowing its ID
 @app.get("/orders/{orders_id}")
 async def get_order(order_id: int, db: Session = Depends(get_db)):
@@ -151,6 +157,7 @@ async def get_order(order_id: int, db: Session = Depends(get_db)):
         "status": order.status
     }
 
+# BOLA VULNERABILITY 4
 # Anyone can modify any order status
 @app.put("orders/{order_id}")
 async def update_order(order_id: int, status: str, db: Session = Depends(get_db)):
@@ -161,6 +168,7 @@ async def update_order(order_id: int, status: str, db: Session = Depends(get_db)
     db.commit()
     return {"message": "Order updated"}
     
+# BOLA Vulnerability 6
 # Anyone can access any user's orders just by changing the user_id in the URL
 # No authentication check to verify if the requester is logged in
 # No authorization check to verify if the requester is allowed to see these orders    
@@ -174,11 +182,13 @@ async def get_user_orders(user_id: int, db: Session = Depends(get_db)):
         "status": order.status
         } for order in orders]
 
+# BOLA VULNERABILITY 7
+# Anyone can delete any order
 @app.delete("/orders/{order_id}")
 async def delete_order(order_id: int, db: Session = Depends(get_db)):
     order = db.query(Order).filter(Order.id == order_id).first()
     if not order:
         raise HTTPException(status_code=404, detail="Order not found")
     db.delete(order)
-    db.commit
+    db.commit()
     return {"message": "Order deleted"}
