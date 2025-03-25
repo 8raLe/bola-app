@@ -184,7 +184,7 @@ def enumeration_test(patterns, endpoint, token):
     for pattern in patterns:
         status_codes = {}
 
-        for i in range(0,4):
+        for i in range(-5,10):
             url = f"{BASE_URL}/{endpoint}/{i}"
             if pattern == "404_First":
                 url = f"{url}/alt-path"
@@ -251,7 +251,12 @@ def analyse_tests(enumeration_results):
                 if 403 in patterns_data:
                     discovered_IDs_data = patterns_data[403]
 
-                    valid_range = list(range(1,6)) ## EDIT IF LATER HAVE MORE IDs THAN THIS -- would have a more comprehensive function in an actual testing system
+                    # Separate ranges for different resource types
+                    if resource_type == "users":
+                        valid_range = list(range(1, 5))  # 4 users
+                    elif resource_type == "orders":
+                        valid_range = list(range(1, 8))  # 7 orders
+                    # valid_range = list(range(1,5)) ## EDIT IF LATER HAVE MORE IDs THAN THIS -- would have a more comprehensive function in an actual testing system
                     discovered_ID = []
                     for id in discovered_IDs_data:
                         if id in valid_range:
@@ -278,25 +283,57 @@ def analyse_tests(enumeration_results):
             
 
 test_analysis = analyse_tests(all_enum_results)
-print(json.dumps(analyse_tests(all_enum_results), indent=2))
+# print(json.dumps(analyse_tests(all_enum_results), indent=2))
 
 
+def response_times():
+    response_times = {}
+
+    pattern_map = {
+        "403 *": "403_First",
+        "404 *": "404_First",
+        "": "Other",
+        None: "Other"
+    }
+
+    for test in test_results:
+        original_pattern = test["pattern"]
+        pattern = pattern_map.get(original_pattern, original_pattern)
+
+        if pattern not in response_times:
+            response_times[pattern] = []
+        response_times[pattern].append(test["response_time"])
+
+    pattern_results = []
+    for pattern, times in response_times.items():
+        pattern_results.append({
+            "pattern": pattern,
+            "number of tests": len(times),
+            "min_time": min(times),
+            "max_time": max(times),
+            "avg_time": sum(times)/len(times)
+        })
+
+    print(tabulate(pattern_results, headers="keys", tablefmt="grid"))
+    return pattern_results
+
+# response_times()
 
 print(json.dumps(all_enum_results, indent=2))
 with open("test_results.json", "w") as f:
     f.write("//BOLA VULNERABILITIES LOG REPORT\n\n")
 
-    f.write("//Endpoint Test Results (Table):\n")
+    f.write("//Endpoint Test Results (Table):\n\n")
     f.write(tabulate(test_results, headers="keys", tablefmt="grid"))
 
     f.write("\n\n//Endpoint Test Results (Raw):\n")
     json.dump(test_results, f, indent=2)
 
+    f.write("\n\n//Response Time:\n")
+    json.dump(response_times(), f, indent=2)
+
     f.write("\n\n\n\n//Enumeration Test Results:\n")
     json.dump(all_enum_results, f, indent=2)
 
-
-
-
-
-
+    f.write("\n\n\n\n//Enumeration Test Success Chance:\n")
+    json.dump(test_analysis, f, indent=2)
