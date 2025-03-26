@@ -84,7 +84,7 @@ def test_endpoint(method, endpoint, user_id, username, description, data=None):
         "url": url,
         "username": username,
         "status_code": response.status_code,
-        "response_time": round(duration * 1000, 2),
+        "response_time": round(duration * 1000, 2), # ms
         "expected_status": expected_status,
         "passed": response.status_code == expected_status,
         "description": description
@@ -98,14 +98,40 @@ test_results.append(test_endpoint("GET", "users/3", user2_access, "john", "user2
 test_results.append(test_endpoint("GET", "orders", user2_access, "john", "user2 accessing all orders")) # user2 accessing all orders
 test_results.append(test_endpoint("GET", "orders/1", user2_access, "john", "user2 accessing details of his own order")) #user2 accessing details of his own order
 test_results.append(test_endpoint("GET", "users/3/orders", user2_access, "john", "user2 accessing the orders of user3")) # user2 accessing the orders of user3
-test_results.append(test_endpoint("PUT", "orders/3", user2_access, "john", "user2 modify user3's order", {"status": "Cancelled"})) # user2 modify user3's order
+test_results.append(test_endpoint("PUT", "orders/6", user2_access, "john", "user2 modify user3's order", {"status": "Cancelled"})) # user2 modify user3's order
 test_results.append(test_endpoint("PUT", "product/1", user2_access, "john", "user2 changing details of a product", {"price": 0.01})) # user2 changing details of a product
-test_results.append(test_endpoint("DELETE", "orders/3", user2_access, "john", "user2 delete user3 order")) #user2 delete user3 order
+test_results.append(test_endpoint("DELETE", "orders/6", user2_access, "john", "user2 delete user3 order")) #user2 delete user3 order
 
 print(tabulate(test_results, headers="keys", tablefmt="grid"))
+
+
+def enumeration_test(endpoints):
+    results = {}
+
+    for endpoint in endpoints:
+        status_codes = {}
+
+        for i in range(-5,10):
+            url = f"{BASE_URL}/{endpoint}/{i}"
+
+            response = requests.get(url)
+            status = response.status_code
+
+            if status not in status_codes:
+                status_codes[status] = []
+            status_codes[status].append(i)
+
+        results[endpoint] = status_codes
+
+
+    return results
+
+enumeration_results = enumeration_test(["users", "orders"])
 
 with open("vulnerable_test_results.json", "w") as f:
     f.write("//BOLA VULNERABILITY PRE-PATCH TESTS\n\n")
     f.write(tabulate(test_results, headers="keys", tablefmt="grid"))
     f.write("\n\n//Raw Results\n")
     json.dump(test_results, f, indent=2)
+    f.write("\n\n//Enumeration Attack Results\n")
+    json.dump(enumeration_results, f, indent=2)
