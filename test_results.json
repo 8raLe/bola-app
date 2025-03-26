@@ -5,83 +5,83 @@
 +-----------------+----------+----------------+----------------+------------------------------------------+------------+---------------+-----------------+-------------------+----------+
 | vulnerability   | method   | pattern        | endpoint       | url                                      | username   |   status_code |   response_time |   expected_status | passed   |
 +=================+==========+================+================+==========================================+============+===============+=================+===================+==========+
-| BOLA 1          | GET      | 403_First      | users/2        | http://localhost:8000/users/2            | john       |           200 |         1017.78 |               200 | True     |
+| BOLA 1          | GET      | 403_First      | users/2        | http://localhost:8000/users/2            | john       |           200 |         1022.63 |               200 | True     |
 +-----------------+----------+----------------+----------------+------------------------------------------+------------+---------------+-----------------+-------------------+----------+
-| BOLA 1          | GET      | 404_First      | users/2        | http://localhost:8000/users/2/alt-path   | john       |           200 |         1023.02 |               200 | True     |
+| BOLA 1          | GET      | 404_First      | users/2        | http://localhost:8000/users/2/alt-path   | john       |           200 |         1019.81 |               200 | True     |
 +-----------------+----------+----------------+----------------+------------------------------------------+------------+---------------+-----------------+-------------------+----------+
-| BOLA 1          | GET      | Query_Focused  | users/2        | http://localhost:8000/users/2/alt-path2  | john       |           200 |         1024.36 |               200 | True     |
+| BOLA 1          | GET      | Query_Focused  | users/2        | http://localhost:8000/users/2/alt-path2  | john       |           200 |         1022.47 |               200 | True     |
 +-----------------+----------+----------------+----------------+------------------------------------------+------------+---------------+-----------------+-------------------+----------+
-| BOLA 1          | GET      | 403_First      | users/3        | http://localhost:8000/users/3            | john       |           403 |         1023.1  |               403 | True     |
+| BOLA 1          | GET      | 403_First      | users/3        | http://localhost:8000/users/3            | john       |           403 |         1023.21 |               403 | True     |
 +-----------------+----------+----------------+----------------+------------------------------------------+------------+---------------+-----------------+-------------------+----------+
-| BOLA 1          | GET      | 404_First      | users/3        | http://localhost:8000/users/3/alt-path   | john       |           403 |         1023.9  |               403 | True     |
+| BOLA 1          | GET      | 404_First      | users/3        | http://localhost:8000/users/3/alt-path   | john       |           403 |         1022.28 |               403 | True     |
 +-----------------+----------+----------------+----------------+------------------------------------------+------------+---------------+-----------------+-------------------+----------+
-| BOLA 1          | GET      | Query_Focused  | users/3        | http://localhost:8000/users/3/alt-path2  | john       |           404 |         1024.25 |               404 | True     |
+| BOLA 1          | GET      | Query_Focused  | users/3        | http://localhost:8000/users/3/alt-path2  | john       |           404 |         1020.91 |               404 | True     |
 +-----------------+----------+----------------+----------------+------------------------------------------+------------+---------------+-----------------+-------------------+----------+
-| BOLA 3          | GET      | 403_First      | orders/1       | http://localhost:8000/orders/1           | john       |           200 |         1024.53 |               200 | True     |
+| BOLA 3          | GET      | 403_First      | orders/1       | http://localhost:8000/orders/1           | john       |           200 |         1022.89 |               200 | True     |
 +-----------------+----------+----------------+----------------+------------------------------------------+------------+---------------+-----------------+-------------------+----------+
-| BOLA 3          | GET      | 404_First      | orders/1       | http://localhost:8000/orders/1/alt-path  | john       |           200 |         1022.85 |               200 | True     |
+| BOLA 3          | GET      | 404_First      | orders/1       | http://localhost:8000/orders/1/alt-path  | john       |           200 |         1022.37 |               200 | True     |
 +-----------------+----------+----------------+----------------+------------------------------------------+------------+---------------+-----------------+-------------------+----------+
-| BOLA 3          | GET      | Query_Focused  | orders/1       | http://localhost:8000/orders/1/alt-path2 | john       |           200 |         1024.79 |               200 | True     |
+| BOLA 3          | GET      | Query_Focused  | orders/1       | http://localhost:8000/orders/1/alt-path2 | john       |           200 |         1023.23 |               200 | True     |
 +-----------------+----------+----------------+----------------+------------------------------------------+------------+---------------+-----------------+-------------------+----------+
-| BOLA 3          | GET      | 403_First      | orders/5       | http://localhost:8000/orders/5           | john       |           403 |         1022.76 |               403 | True     |
+| BOLA 3          | GET      | 403_First      | orders/5       | http://localhost:8000/orders/5           | john       |           403 |         1022.88 |               403 | True     |
 +-----------------+----------+----------------+----------------+------------------------------------------+------------+---------------+-----------------+-------------------+----------+
-| BOLA 3          | GET      | 404_First      | orders/5       | http://localhost:8000/orders/5/alt-path  | john       |           403 |         1023.86 |               403 | True     |
+| BOLA 3          | GET      | 404_First      | orders/5       | http://localhost:8000/orders/5/alt-path  | john       |           403 |         1022.74 |               403 | True     |
 +-----------------+----------+----------------+----------------+------------------------------------------+------------+---------------+-----------------+-------------------+----------+
-| BOLA 3          | GET      | Query_Focused  | orders/5       | http://localhost:8000/orders/5/alt-path2 | john       |           404 |         1023.67 |               404 | True     |
+| BOLA 3          | GET      | Query_Focused  | orders/5       | http://localhost:8000/orders/5/alt-path2 | john       |           404 |         1022.62 |               404 | True     |
 +-----------------+----------+----------------+----------------+------------------------------------------+------------+---------------+-----------------+-------------------+----------+
-| BOLA 1          | GET      | 403_First      | users/2        | http://localhost:8000/users/2            | bob        |           403 |         1023.44 |               403 | True     |
+| BOLA 1          | GET      | 403_First      | users/2        | http://localhost:8000/users/2            | bob        |           403 |         1021.91 |               403 | True     |
 +-----------------+----------+----------------+----------------+------------------------------------------+------------+---------------+-----------------+-------------------+----------+
-| BOLA 1          | GET      | 404_First      | users/2        | http://localhost:8000/users/2/alt-path   | bob        |           403 |         1024.26 |               403 | True     |
+| BOLA 1          | GET      | 404_First      | users/2        | http://localhost:8000/users/2/alt-path   | bob        |           403 |         1022.41 |               403 | True     |
 +-----------------+----------+----------------+----------------+------------------------------------------+------------+---------------+-----------------+-------------------+----------+
-| BOLA 1          | GET      | Query_Focused  | users/2        | http://localhost:8000/users/2/alt-path2  | bob        |           404 |         1023.81 |               404 | True     |
+| BOLA 1          | GET      | Query_Focused  | users/2        | http://localhost:8000/users/2/alt-path2  | bob        |           404 |         1022.99 |               404 | True     |
 +-----------------+----------+----------------+----------------+------------------------------------------+------------+---------------+-----------------+-------------------+----------+
-| BOLA 3          | GET      | 403_First      | orders/1       | http://localhost:8000/orders/1           | bob        |           403 |         1023.71 |               403 | True     |
+| BOLA 3          | GET      | 403_First      | orders/1       | http://localhost:8000/orders/1           | bob        |           403 |         1022.71 |               403 | True     |
 +-----------------+----------+----------------+----------------+------------------------------------------+------------+---------------+-----------------+-------------------+----------+
-| BOLA 3          | GET      | 404_First      | orders/1       | http://localhost:8000/orders/1/alt-path  | bob        |           403 |         1023.96 |               403 | True     |
+| BOLA 3          | GET      | 404_First      | orders/1       | http://localhost:8000/orders/1/alt-path  | bob        |           403 |         1022.38 |               403 | True     |
 +-----------------+----------+----------------+----------------+------------------------------------------+------------+---------------+-----------------+-------------------+----------+
-| BOLA 3          | GET      | Query_Focused  | orders/1       | http://localhost:8000/orders/1/alt-path2 | bob        |           404 |         1023.72 |               404 | True     |
+| BOLA 3          | GET      | Query_Focused  | orders/1       | http://localhost:8000/orders/1/alt-path2 | bob        |           404 |         1020.33 |               404 | True     |
 +-----------------+----------+----------------+----------------+------------------------------------------+------------+---------------+-----------------+-------------------+----------+
-| BOLA 3          | GET      | 403_First      | orders/4       | http://localhost:8000/orders/4           | bob        |           500 |         1023.8  |               200 | False    |
+| BOLA 3          | GET      | 403_First      | orders/6       | http://localhost:8000/orders/6           | bob        |           200 |         1022.91 |               200 | True     |
 +-----------------+----------+----------------+----------------+------------------------------------------+------------+---------------+-----------------+-------------------+----------+
-| BOLA 3          | GET      | 404_First      | orders/4       | http://localhost:8000/orders/4/alt-path  | bob        |           404 |         1023.96 |               200 | False    |
+| BOLA 3          | GET      | 404_First      | orders/6       | http://localhost:8000/orders/6/alt-path  | bob        |           200 |         1021.21 |               200 | True     |
 +-----------------+----------+----------------+----------------+------------------------------------------+------------+---------------+-----------------+-------------------+----------+
-| BOLA 3          | GET      | Query_Focused  | orders/4       | http://localhost:8000/orders/4/alt-path2 | bob        |           404 |         1023.91 |               200 | False    |
+| BOLA 3          | GET      | Query_Focused  | orders/6       | http://localhost:8000/orders/6/alt-path2 | bob        |           200 |         1022.48 |               200 | True     |
 +-----------------+----------+----------------+----------------+------------------------------------------+------------+---------------+-----------------+-------------------+----------+
-| BOLA 1          | GET      | 403_First      | users/2        | http://localhost:8000/users/2            | admin      |           200 |         1023.87 |               200 | True     |
+| BOLA 1          | GET      | 403_First      | users/2        | http://localhost:8000/users/2            | admin      |           200 |         1021.55 |               200 | True     |
 +-----------------+----------+----------------+----------------+------------------------------------------+------------+---------------+-----------------+-------------------+----------+
-| BOLA 1          | GET      | 404_First      | users/2        | http://localhost:8000/users/2/alt-path   | admin      |           200 |         1023.57 |               200 | True     |
+| BOLA 1          | GET      | 404_First      | users/2        | http://localhost:8000/users/2/alt-path   | admin      |           200 |         1022.65 |               200 | True     |
 +-----------------+----------+----------------+----------------+------------------------------------------+------------+---------------+-----------------+-------------------+----------+
-| BOLA 1          | GET      | Query_Focused  | users/2        | http://localhost:8000/users/2/alt-path2  | admin      |           200 |         1025.2  |               200 | True     |
+| BOLA 1          | GET      | Query_Focused  | users/2        | http://localhost:8000/users/2/alt-path2  | admin      |           200 |         1021.39 |               200 | True     |
 +-----------------+----------+----------------+----------------+------------------------------------------+------------+---------------+-----------------+-------------------+----------+
-| BOLA 3          | GET      | 403_First      | orders/2       | http://localhost:8000/orders/2           | admin      |           200 |         1022.66 |               200 | True     |
+| BOLA 3          | GET      | 403_First      | orders/2       | http://localhost:8000/orders/2           | admin      |           200 |         1023.4  |               200 | True     |
 +-----------------+----------+----------------+----------------+------------------------------------------+------------+---------------+-----------------+-------------------+----------+
-| BOLA 3          | GET      | 404_First      | orders/2       | http://localhost:8000/orders/2/alt-path  | admin      |           200 |         1023.52 |               200 | True     |
+| BOLA 3          | GET      | 404_First      | orders/2       | http://localhost:8000/orders/2/alt-path  | admin      |           200 |         1024.15 |               200 | True     |
 +-----------------+----------+----------------+----------------+------------------------------------------+------------+---------------+-----------------+-------------------+----------+
-| BOLA 3          | GET      | Query_Focused  | orders/2       | http://localhost:8000/orders/2/alt-path2 | admin      |           200 |         1023.63 |               200 | True     |
+| BOLA 3          | GET      | Query_Focused  | orders/2       | http://localhost:8000/orders/2/alt-path2 | admin      |           200 |         1023.9  |               200 | True     |
 +-----------------+----------+----------------+----------------+------------------------------------------+------------+---------------+-----------------+-------------------+----------+
 | BOLA 6          | GET      | 403 *          | users/3/orders | http://localhost:8000/users/3/orders     | john       |           403 |         1023.18 |               403 | True     |
 +-----------------+----------+----------------+----------------+------------------------------------------+------------+---------------+-----------------+-------------------+----------+
-| BOLA 6          | GET      | 403 *          | users/2/orders | http://localhost:8000/users/2/orders     | john       |           200 |         1024.77 |               200 | True     |
+| BOLA 6          | GET      | 403 *          | users/2/orders | http://localhost:8000/users/2/orders     | john       |           200 |         1024.02 |               200 | True     |
 +-----------------+----------+----------------+----------------+------------------------------------------+------------+---------------+-----------------+-------------------+----------+
-| BOLA 6          | GET      | 403 *          | users/2/orders | http://localhost:8000/users/2/orders     | bob        |           403 |         1023.36 |               403 | True     |
+| BOLA 6          | GET      | 403 *          | users/2/orders | http://localhost:8000/users/2/orders     | bob        |           403 |         1020.58 |               403 | True     |
 +-----------------+----------+----------------+----------------+------------------------------------------+------------+---------------+-----------------+-------------------+----------+
-| BOLA 6          | GET      | 403 *          | users/3/orders | http://localhost:8000/users/3/orders     | bob        |           200 |         1024.2  |               200 | True     |
+| BOLA 6          | GET      | 403 *          | users/3/orders | http://localhost:8000/users/3/orders     | bob        |           200 |         1023.75 |               200 | True     |
 +-----------------+----------+----------------+----------------+------------------------------------------+------------+---------------+-----------------+-------------------+----------+
-| BOLA 1          | GET      | Path_Traversal | users/2/../3   | http://localhost:8000/users/2/../3       | john       |           403 |         1022.8  |               403 | True     |
+| BOLA 1          | GET      | Path_Traversal | users/2/../3   | http://localhost:8000/users/2/../3       | john       |           403 |         1020.3  |               403 | True     |
 +-----------------+----------+----------------+----------------+------------------------------------------+------------+---------------+-----------------+-------------------+----------+
-| BOLA 4          | PUT      | 404 *          | orders/5       | http://localhost:8000/orders/5           | john       |           403 |         2048.75 |               403 | True     |
+| BOLA 4          | PUT      | 404 *          | orders/5       | http://localhost:8000/orders/5           | john       |           403 |         2047.15 |               403 | True     |
 +-----------------+----------+----------------+----------------+------------------------------------------+------------+---------------+-----------------+-------------------+----------+
-| BOLA 4          | PUT      | 404 *          | orders/5       | http://localhost:8000/orders/5           | bob        |           200 |         2047.81 |               200 | True     |
+| BOLA 4          | PUT      | 404 *          | orders/5       | http://localhost:8000/orders/5           | bob        |           200 |         2045.21 |               200 | True     |
 +-----------------+----------+----------------+----------------+------------------------------------------+------------+---------------+-----------------+-------------------+----------+
-| BOLA 7          | DELETE   | 404 *          | orders/4       | http://localhost:8000/orders/4           | john       |           404 |         1023.23 |               403 | False    |
+| BOLA 7          | DELETE   | 404 *          | orders/8       | http://localhost:8000/orders/8           | john       |           404 |         1022.69 |               404 | True     |
 +-----------------+----------+----------------+----------------+------------------------------------------+------------+---------------+-----------------+-------------------+----------+
-| BOLA 7          | DELETE   | 404 *          | orders/4       | http://localhost:8000/orders/4           | bob        |           404 |         1024.07 |               200 | False    |
+| BOLA 7          | DELETE   | 404 *          | orders/8       | http://localhost:8000/orders/8           | bob        |           200 |         1073.93 |               200 | True     |
 +-----------------+----------+----------------+----------------+------------------------------------------+------------+---------------+-----------------+-------------------+----------+
-| Other           | POST     |                | orders/4       | http://localhost:8000/orders/4           | john       |           405 |         1021.6  |               405 | True     |
+| Other           | POST     |                | orders/6       | http://localhost:8000/orders/6           | john       |           405 |         1015.58 |               405 | True     |
 +-----------------+----------+----------------+----------------+------------------------------------------+------------+---------------+-----------------+-------------------+----------+
-| Other           | GET      |                | orders?id=4    | http://localhost:8000/orders?id=4        | john       |           200 |         1025.87 |               404 | False    |
+| Other           | GET      |                | orders?id=6    | http://localhost:8000/orders?id=6        | john       |           200 |         1026.29 |               404 | False    |
 +-----------------+----------+----------------+----------------+------------------------------------------+------------+---------------+-----------------+-------------------+----------+
-| BOLA 5          | PUT      | 404 *          | product/1      | http://localhost:8000/product/1          | john       |           403 |         1023.67 |               403 | True     |
+| BOLA 5          | PUT      | 404 *          | product/1      | http://localhost:8000/product/1          | john       |           403 |         1022.75 |               403 | True     |
 +-----------------+----------+----------------+----------------+------------------------------------------+------------+---------------+-----------------+-------------------+----------+
 
 //Endpoint Test Results (Raw):
@@ -94,7 +94,7 @@
     "url": "http://localhost:8000/users/2",
     "username": "john",
     "status_code": 200,
-    "response_time": 1017.78,
+    "response_time": 1022.63,
     "expected_status": 200,
     "passed": true
   },
@@ -106,7 +106,7 @@
     "url": "http://localhost:8000/users/2/alt-path",
     "username": "john",
     "status_code": 200,
-    "response_time": 1023.02,
+    "response_time": 1019.81,
     "expected_status": 200,
     "passed": true
   },
@@ -118,7 +118,7 @@
     "url": "http://localhost:8000/users/2/alt-path2",
     "username": "john",
     "status_code": 200,
-    "response_time": 1024.36,
+    "response_time": 1022.47,
     "expected_status": 200,
     "passed": true
   },
@@ -130,7 +130,7 @@
     "url": "http://localhost:8000/users/3",
     "username": "john",
     "status_code": 403,
-    "response_time": 1023.1,
+    "response_time": 1023.21,
     "expected_status": 403,
     "passed": true
   },
@@ -142,7 +142,7 @@
     "url": "http://localhost:8000/users/3/alt-path",
     "username": "john",
     "status_code": 403,
-    "response_time": 1023.9,
+    "response_time": 1022.28,
     "expected_status": 403,
     "passed": true
   },
@@ -154,7 +154,7 @@
     "url": "http://localhost:8000/users/3/alt-path2",
     "username": "john",
     "status_code": 404,
-    "response_time": 1024.25,
+    "response_time": 1020.91,
     "expected_status": 404,
     "passed": true
   },
@@ -166,7 +166,7 @@
     "url": "http://localhost:8000/orders/1",
     "username": "john",
     "status_code": 200,
-    "response_time": 1024.53,
+    "response_time": 1022.89,
     "expected_status": 200,
     "passed": true
   },
@@ -178,7 +178,7 @@
     "url": "http://localhost:8000/orders/1/alt-path",
     "username": "john",
     "status_code": 200,
-    "response_time": 1022.85,
+    "response_time": 1022.37,
     "expected_status": 200,
     "passed": true
   },
@@ -190,7 +190,7 @@
     "url": "http://localhost:8000/orders/1/alt-path2",
     "username": "john",
     "status_code": 200,
-    "response_time": 1024.79,
+    "response_time": 1023.23,
     "expected_status": 200,
     "passed": true
   },
@@ -202,7 +202,7 @@
     "url": "http://localhost:8000/orders/5",
     "username": "john",
     "status_code": 403,
-    "response_time": 1022.76,
+    "response_time": 1022.88,
     "expected_status": 403,
     "passed": true
   },
@@ -214,7 +214,7 @@
     "url": "http://localhost:8000/orders/5/alt-path",
     "username": "john",
     "status_code": 403,
-    "response_time": 1023.86,
+    "response_time": 1022.74,
     "expected_status": 403,
     "passed": true
   },
@@ -226,7 +226,7 @@
     "url": "http://localhost:8000/orders/5/alt-path2",
     "username": "john",
     "status_code": 404,
-    "response_time": 1023.67,
+    "response_time": 1022.62,
     "expected_status": 404,
     "passed": true
   },
@@ -238,7 +238,7 @@
     "url": "http://localhost:8000/users/2",
     "username": "bob",
     "status_code": 403,
-    "response_time": 1023.44,
+    "response_time": 1021.91,
     "expected_status": 403,
     "passed": true
   },
@@ -250,7 +250,7 @@
     "url": "http://localhost:8000/users/2/alt-path",
     "username": "bob",
     "status_code": 403,
-    "response_time": 1024.26,
+    "response_time": 1022.41,
     "expected_status": 403,
     "passed": true
   },
@@ -262,7 +262,7 @@
     "url": "http://localhost:8000/users/2/alt-path2",
     "username": "bob",
     "status_code": 404,
-    "response_time": 1023.81,
+    "response_time": 1022.99,
     "expected_status": 404,
     "passed": true
   },
@@ -274,7 +274,7 @@
     "url": "http://localhost:8000/orders/1",
     "username": "bob",
     "status_code": 403,
-    "response_time": 1023.71,
+    "response_time": 1022.71,
     "expected_status": 403,
     "passed": true
   },
@@ -286,7 +286,7 @@
     "url": "http://localhost:8000/orders/1/alt-path",
     "username": "bob",
     "status_code": 403,
-    "response_time": 1023.96,
+    "response_time": 1022.38,
     "expected_status": 403,
     "passed": true
   },
@@ -298,7 +298,7 @@
     "url": "http://localhost:8000/orders/1/alt-path2",
     "username": "bob",
     "status_code": 404,
-    "response_time": 1023.72,
+    "response_time": 1020.33,
     "expected_status": 404,
     "passed": true
   },
@@ -306,37 +306,37 @@
     "vulnerability": "BOLA 3",
     "method": "GET",
     "pattern": "403_First",
-    "endpoint": "orders/4",
-    "url": "http://localhost:8000/orders/4",
+    "endpoint": "orders/6",
+    "url": "http://localhost:8000/orders/6",
     "username": "bob",
-    "status_code": 500,
-    "response_time": 1023.8,
+    "status_code": 200,
+    "response_time": 1022.91,
     "expected_status": 200,
-    "passed": false
+    "passed": true
   },
   {
     "vulnerability": "BOLA 3",
     "method": "GET",
     "pattern": "404_First",
-    "endpoint": "orders/4",
-    "url": "http://localhost:8000/orders/4/alt-path",
+    "endpoint": "orders/6",
+    "url": "http://localhost:8000/orders/6/alt-path",
     "username": "bob",
-    "status_code": 404,
-    "response_time": 1023.96,
+    "status_code": 200,
+    "response_time": 1021.21,
     "expected_status": 200,
-    "passed": false
+    "passed": true
   },
   {
     "vulnerability": "BOLA 3",
     "method": "GET",
     "pattern": "Query_Focused",
-    "endpoint": "orders/4",
-    "url": "http://localhost:8000/orders/4/alt-path2",
+    "endpoint": "orders/6",
+    "url": "http://localhost:8000/orders/6/alt-path2",
     "username": "bob",
-    "status_code": 404,
-    "response_time": 1023.91,
+    "status_code": 200,
+    "response_time": 1022.48,
     "expected_status": 200,
-    "passed": false
+    "passed": true
   },
   {
     "vulnerability": "BOLA 1",
@@ -346,7 +346,7 @@
     "url": "http://localhost:8000/users/2",
     "username": "admin",
     "status_code": 200,
-    "response_time": 1023.87,
+    "response_time": 1021.55,
     "expected_status": 200,
     "passed": true
   },
@@ -358,7 +358,7 @@
     "url": "http://localhost:8000/users/2/alt-path",
     "username": "admin",
     "status_code": 200,
-    "response_time": 1023.57,
+    "response_time": 1022.65,
     "expected_status": 200,
     "passed": true
   },
@@ -370,7 +370,7 @@
     "url": "http://localhost:8000/users/2/alt-path2",
     "username": "admin",
     "status_code": 200,
-    "response_time": 1025.2,
+    "response_time": 1021.39,
     "expected_status": 200,
     "passed": true
   },
@@ -382,7 +382,7 @@
     "url": "http://localhost:8000/orders/2",
     "username": "admin",
     "status_code": 200,
-    "response_time": 1022.66,
+    "response_time": 1023.4,
     "expected_status": 200,
     "passed": true
   },
@@ -394,7 +394,7 @@
     "url": "http://localhost:8000/orders/2/alt-path",
     "username": "admin",
     "status_code": 200,
-    "response_time": 1023.52,
+    "response_time": 1024.15,
     "expected_status": 200,
     "passed": true
   },
@@ -406,7 +406,7 @@
     "url": "http://localhost:8000/orders/2/alt-path2",
     "username": "admin",
     "status_code": 200,
-    "response_time": 1023.63,
+    "response_time": 1023.9,
     "expected_status": 200,
     "passed": true
   },
@@ -430,7 +430,7 @@
     "url": "http://localhost:8000/users/2/orders",
     "username": "john",
     "status_code": 200,
-    "response_time": 1024.77,
+    "response_time": 1024.02,
     "expected_status": 200,
     "passed": true
   },
@@ -442,7 +442,7 @@
     "url": "http://localhost:8000/users/2/orders",
     "username": "bob",
     "status_code": 403,
-    "response_time": 1023.36,
+    "response_time": 1020.58,
     "expected_status": 403,
     "passed": true
   },
@@ -454,7 +454,7 @@
     "url": "http://localhost:8000/users/3/orders",
     "username": "bob",
     "status_code": 200,
-    "response_time": 1024.2,
+    "response_time": 1023.75,
     "expected_status": 200,
     "passed": true
   },
@@ -466,7 +466,7 @@
     "url": "http://localhost:8000/users/2/../3",
     "username": "john",
     "status_code": 403,
-    "response_time": 1022.8,
+    "response_time": 1020.3,
     "expected_status": 403,
     "passed": true
   },
@@ -478,7 +478,7 @@
     "url": "http://localhost:8000/orders/5",
     "username": "john",
     "status_code": 403,
-    "response_time": 2048.75,
+    "response_time": 2047.15,
     "expected_status": 403,
     "passed": true
   },
@@ -490,7 +490,7 @@
     "url": "http://localhost:8000/orders/5",
     "username": "bob",
     "status_code": 200,
-    "response_time": 2047.81,
+    "response_time": 2045.21,
     "expected_status": 200,
     "passed": true
   },
@@ -498,35 +498,35 @@
     "vulnerability": "BOLA 7",
     "method": "DELETE",
     "pattern": "404 *",
-    "endpoint": "orders/4",
-    "url": "http://localhost:8000/orders/4",
+    "endpoint": "orders/8",
+    "url": "http://localhost:8000/orders/8",
     "username": "john",
     "status_code": 404,
-    "response_time": 1023.23,
-    "expected_status": 403,
-    "passed": false
+    "response_time": 1022.69,
+    "expected_status": 404,
+    "passed": true
   },
   {
     "vulnerability": "BOLA 7",
     "method": "DELETE",
     "pattern": "404 *",
-    "endpoint": "orders/4",
-    "url": "http://localhost:8000/orders/4",
+    "endpoint": "orders/8",
+    "url": "http://localhost:8000/orders/8",
     "username": "bob",
-    "status_code": 404,
-    "response_time": 1024.07,
+    "status_code": 200,
+    "response_time": 1073.93,
     "expected_status": 200,
-    "passed": false
+    "passed": true
   },
   {
     "vulnerability": "Other",
     "method": "POST",
     "pattern": null,
-    "endpoint": "orders/4",
-    "url": "http://localhost:8000/orders/4",
+    "endpoint": "orders/6",
+    "url": "http://localhost:8000/orders/6",
     "username": "john",
     "status_code": 405,
-    "response_time": 1021.6,
+    "response_time": 1015.58,
     "expected_status": 405,
     "passed": true
   },
@@ -534,11 +534,11 @@
     "vulnerability": "Other",
     "method": "GET",
     "pattern": null,
-    "endpoint": "orders?id=4",
-    "url": "http://localhost:8000/orders?id=4",
+    "endpoint": "orders?id=6",
+    "url": "http://localhost:8000/orders?id=6",
     "username": "john",
     "status_code": 200,
-    "response_time": 1025.87,
+    "response_time": 1026.29,
     "expected_status": 404,
     "passed": false
   },
@@ -550,7 +550,7 @@
     "url": "http://localhost:8000/product/1",
     "username": "john",
     "status_code": 403,
-    "response_time": 1023.67,
+    "response_time": 1022.75,
     "expected_status": 403,
     "passed": true
   }
@@ -561,37 +561,37 @@
   {
     "pattern": "403_First",
     "number of tests": 13,
-    "min_time": 1017.78,
-    "max_time": 1024.77,
-    "avg_time": 1023.1661538461539
+    "min_time": 1020.58,
+    "max_time": 1024.02,
+    "avg_time": 1022.7399999999999
   },
   {
     "pattern": "404_First",
     "number of tests": 14,
-    "min_time": 1022.85,
-    "max_time": 2048.75,
-    "avg_time": 1170.0307142857143
+    "min_time": 1019.81,
+    "max_time": 2047.15,
+    "avg_time": 1172.2664285714286
   },
   {
     "pattern": "Query_Focused",
     "number of tests": 9,
-    "min_time": 1023.63,
-    "max_time": 1025.2,
-    "avg_time": 1024.148888888889
+    "min_time": 1020.33,
+    "max_time": 1023.9,
+    "avg_time": 1022.2577777777777
   },
   {
     "pattern": "Path_Traversal",
     "number of tests": 1,
-    "min_time": 1022.8,
-    "max_time": 1022.8,
-    "avg_time": 1022.8
+    "min_time": 1020.3,
+    "max_time": 1020.3,
+    "avg_time": 1020.3
   },
   {
     "pattern": "Other",
     "number of tests": 2,
-    "min_time": 1021.6,
-    "max_time": 1025.87,
-    "avg_time": 1023.7349999999999
+    "min_time": 1015.58,
+    "max_time": 1026.29,
+    "avg_time": 1020.935
   }
 ]
 
@@ -1090,18 +1090,16 @@
       "403_First": {
         "discovered_ids": [
           5,
-          6,
-          7
+          6
         ],
-        "discovery_rate": 42.857142857142854
+        "discovery_rate": 33.33333333333333
       },
       "404_First": {
         "discovered_ids": [
           5,
-          6,
-          7
+          6
         ],
-        "discovery_rate": 42.857142857142854
+        "discovery_rate": 33.33333333333333
       },
       "Query_Focused": {
         "discovered_ids": [],
@@ -1113,19 +1111,17 @@
         "discovered_ids": [
           1,
           2,
-          3,
-          7
+          3
         ],
-        "discovery_rate": 57.14285714285714
+        "discovery_rate": 50.0
       },
       "404_First": {
         "discovered_ids": [
           1,
           2,
-          3,
-          7
+          3
         ],
-        "discovery_rate": 57.14285714285714
+        "discovery_rate": 50.0
       },
       "Query_Focused": {
         "discovered_ids": [],
